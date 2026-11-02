@@ -1,0 +1,26 @@
+# Example configuration for movilidad-foranea.
+# Copy this file to config.yaml and edit the values for your own run:
+#
+#     cp examples/config.example.yaml config.yaml
+
+# Directory where the result spreadsheets are written. Each platform gets its
+# own subfolder (output/ado, output/booking, ...), created automatically.
+output_dir: "output"
+
+# --- Bus routes (ADO, Omnibus de Mexico, ClickBus, BusBud)
+mobility:
+  headless: false            # false = show the Chrome window; true = hide it
+  start_date: "2026-11-01"   # first travel date to query (YYYY-MM-DD, or "today")
+  n_days: 7                  # number of consecutive days to query from start_date
+  routes:                    # origin -> destination pairs
+    - [ "Ciudad de México, CDMX", "Acapulco" ]
+    - [ "Ciudad de México, CDMX", "Puebla" ]
+
+# --- Hotels (accommodation / Booking.com)
+accommodation:
+  headless: false
+  checkin_date: "2026-11-01" # check-in date (YYYY-MM-DD, or "today")
+  stay_nights: 5             # length of stay, in nights
+  cities:                    # cities to query; spell each as Booking expects
+    - "Cancún"
+    - "Acapulco"
