@@ -1,0 +1,63 @@
+
+# Packaging configuration for movilidad-foranea.
+
+[build-system]
+# "build-backend" is the tool that assembles the installable package.
+# hatchling is modern, simple, and needs no extra configuration.
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "movilidad-foranea"
+version = "1.0.0"
+description = "Reproducible extraction of intercity bus routes and hotel geolocation in Mexico"
+readme = "README.md"
+requires-python = ">=3.10"      
+license = "GPL-3.0-only" 
+
+authors = [
+  { name = "Ivan Espinosa" },
+  { name = "Victor Reyes" },
+]
+
+# TODO: 
+# Runtime dependencies. Versions are left unpinned here for now; the exact
+# pinned versions are mirrored in requirements.txt (final sync pending).
+dependencies = [
+  "selenium",            # drives the Chrome browser
+  "selenium-wire",       # network interception (GraphQL capture) for Booking
+  "webdriver-manager",   # downloads/manages ChromeDriver automatically
+  "pandas",              # tabular data handling
+  "openpyxl",            # required for pandas to write .xlsx files
+  "tqdm",                # progress bars during scraping
+  "pyyaml",              # reads the config.yaml file
+  "brotli",              # decompresses Brotli-encoded responses in Booking
+  "pandera",             # output data-frame schema validation
+  "tenacity",            # retry logic for Selenium failure
+]
+
+[project.scripts]
+# Creates the "movilidad-foranea" command in the terminal.
+# It points to the main() function in cli.py.
+movilidad-foranea = "movilidad_foranea.cli:main"
+
+[tool.hatch.build.targets.wheel]
+# tells hatchling that the package code lives under src/
+packages = ["src/movilidad_foranea"]
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Default run excludes integration tests, so CI run only the 
+# stable unit test. 
+addopts = "-m 'not integration'"
+markers = [
+    "integration: requires Google Chrome / network; run manually with -m integration",
+]
+
+# Silence a known upstream DeprecationWarning from selenium-wire's bundled 
+# (pkg_resources API). It is not emmited by this package's code and does 
+# not affect correctness. 
+filterwarnings = ["ignore::DeprecationWarning:seleniumwire.*",]
+
+
