@@ -392,7 +392,7 @@ class BusBudScraper:
                 validate_mobility(df)
             except SchemaErrors as exc:
                 self.logger.warning(
-                    f"Data validation reported issues:\n%s {exc.failure_cases}"
+                    f"Data validation reported issues:\n{exc.failure_cases}"
                 )
             df.to_excel(filename, index=False, engine="openpyxl")
             print(f"Saved {len(trips_data)} trips to {filename}")
