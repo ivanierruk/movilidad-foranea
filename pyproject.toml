@@ -29,9 +29,20 @@ dependencies = [
   "brotli",              # decompresses Brotli-encoded responses in Booking
   "pandera",             # output data-frame schema validation
   "tenacity",            # retry logic for transient Selenium failures
-  "blinker<1.8",         # selenium-wire imports blinker._saferef (removed in blinker >= 1.8)
-  "setuptools<80",       # provides pkg_resources (dropped in newer setuptools); 79.x verified, needed by selenium-wire
+  # selenium-wire is unmaintained and needs an older TLS/HTTP stack; without
+  # these upper bounds a fresh install pulls versions that break its traffic
+  # interception (net::ERR_CONNECTION_CLOSED). requirements.txt pins the full
+  # reproducible environment.
+  "blinker<1.8",         # selenium-wire imports blinker._saferef (removed in >= 1.8)
+  "setuptools<80",       # provides pkg_resources (dropped in newer setuptools)
+  "cryptography<46",     # selenium-wire TLS interception breaks with newer versions
+  "pyOpenSSL<26",        # same: TLS interception
+  "kaitaistruct<0.11",   # selenium-wire TLS ClientHello parsing
 ]
+ 
+[project.optional-dependencies]
+# Development/test tooling. Install with:  pip install -e ".[test]"
+test = ["pytest"]
 
 [project.scripts]
 # Creates the "movilidad-foranea" command in the terminal.
