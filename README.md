@@ -1,4 +1,5 @@
 # Intercity mobility and accommodation in Mexico: from web platforms to spatial data
+[![tests](https://github.com/ivanierruk/movilidad-foranea/actions/workflows/tests.yml/badge.svg)](https://github.com/ivanierruk/movilidad-foranea/actions/workflows/tests.yml)
 
 **`movilidad-foranea` — Reproducible extraction of intercity bus routes and hotel geolocation in Mexico.**
 
