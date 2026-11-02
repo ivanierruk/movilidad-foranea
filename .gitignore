@@ -27,5 +27,8 @@ output/**
 !output/**/
 !output/**/.gitkeep
 
-
+# R session 
+.Rhistory
+.RData
+.Rproj.user/
 
