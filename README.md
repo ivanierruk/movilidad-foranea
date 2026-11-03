@@ -75,23 +75,27 @@ python -m pip install "git+https://github.com/ivanierruk/movilidad-foranea.git@v
 ### Development install
 
 To work on the code itself, clone the repository and install it in *editable*
-mode (`-e`), so that changes to the source take effect without reinstalling:
+mode (`-e`). The `[test]` extra also installs the test tools (`pytest`), so you
+can run the test suite:
 
 ```bash
 git clone https://github.com/ivanierruk/movilidad-foranea.git
 cd movilidad-foranea
-python -m pip install -e .
+python -m pip install -e ".[test]"
+pytest
 ```
 
 ### Reproducible install with pinned versions
 
 `requirements.txt` records the exact dependency versions used in the reference
-environment. To reproduce it exactly (shown here with the `uv` package manager):
+environment (it also includes `pytest`, so the test suite runs after installing).
+To reproduce it exactly (shown here with the `uv` package manager):
 
 ```bash
 uv venv
 uv pip install -r requirements.txt
 uv pip install -e . --no-deps
+pytest   # optional: run the unit tests
 ```
 
 ### A note on the `selenium-wire` dependencies
